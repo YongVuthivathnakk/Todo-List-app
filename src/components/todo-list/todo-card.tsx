@@ -1,33 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { Input } from "../ui/input";
 import { ToDoContent } from "./todo-content";
 import { ToDoHistory } from "./todo-history";
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronsDown, ChevronsDownIcon } from "lucide-react";
+import { Heading3 } from "lucide-react";
+
 
 export const ToDoCard = () => {
 
     const [todo, setTodo] = useState<string>("");
     const [list, setList] = useState<string[]>([]);
+    const [completedList, setCompletdList] = useState<string[]>([]);
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleAddTodo();
+    }
     const handleAddTodo = () => {
         if (todo.trim() !== "") {
             setList(prevList => [...prevList, todo]);
             setTodo(""); // Clear todo Input
         }
     }
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        handleAddTodo();
+
+
+    const handleCheckBox = (item: string) => {
+        if(!completedList.includes(item)) {
+            setCompletdList((prevList => [...prevList, item]));
+            setList(prevList => prevList.filter(todo => todo !== item))
+        }
     }
+
 
     return (
         <Card className="w-150">
@@ -49,25 +55,12 @@ export const ToDoCard = () => {
             </CardHeader>
             <div className="h-[1px] bg-gray-200 mx-6" />
             <CardContent>
-                <ToDoContent list={list} />
+
+                { list.length > 0 ? <ToDoContent list={list} handleCheckBox={handleCheckBox} /> : <h3 className="text-gray-500 opacity-50">No task available</h3>}
+                {/* TODO: fix the check box and the histroy + the bug when cheking the task that have the same name */}
             </CardContent>
             <CardFooter>
-                <Collapsible>
-                    <div className="flex items-center justify-between gap-4 px-4">
-                        <h4 className="text-sm font-semibold">
-                            @peduarte starred 3 repositories
-                        </h4>
-                        <CollapsibleTrigger asChild>
-                            <Button variant="ghost" size="icon" className="size-8">
-                                <ChevronsDownIcon />
-                                <span className="sr-only">Toggle</span>
-                            </Button>
-                        </CollapsibleTrigger>
-                    </div>
-                    <CollapsibleContent>
-                        <ToDoHistory list={list} />
-                    </CollapsibleContent>
-                </Collapsible>
+                <ToDoHistory completedList={completedList} />
             </CardFooter>
         </Card>
     )
