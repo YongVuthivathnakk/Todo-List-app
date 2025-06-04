@@ -48,7 +48,7 @@ export const ToDoCard = () => {
                     Todo List
                 </CardTitle>
                 <CardDescription className="mb-4">
-                    Your task
+                    My task
                 </CardDescription>
                 <CardAction className="self-center">
                     <form onSubmit={handleSubmit} className="flex space-x-3">
@@ -76,7 +76,7 @@ export const ToDoCard = () => {
                 </div>}
             </CardContent>
             <CardFooter>
-                <ToDoHistory completedList={completedList} handleDeleteTask={handleDeleteTask} />
+                {completedList.length > 0 && <ToDoHistory completedList={completedList} handleDeleteTask={handleDeleteTask} />}
             </CardFooter>
         </Card>
     )

@@ -17,8 +17,8 @@ export const ToDoContent = ({list, handleCheckBox}: ToDoContentProps) => {
         <div>
             <div className="flex flex-col space-y-4">
                 {list.map((item) => (
-                    <div key={item.id} className="flex items-center space-x-4">
-                        <Checkbox onCheckedChange={() => handleCheckBox(item.id)} id={`box-${item.id}`} />
+                    <div key={item.id} className="flex items-center space-x-4 rounded-md border px-4 py-3 text-sm hover:bg-gray-50">
+                        <Checkbox onCheckedChange={() => handleCheckBox(item.id)} id={`box-${item.id}` } className="cursor-pointer"/>
                         <Label htmlFor={`box-${item.id}`}>
                             {item.task}
                         </Label>

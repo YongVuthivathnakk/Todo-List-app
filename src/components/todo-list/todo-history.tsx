@@ -29,7 +29,7 @@ export const ToDoHistory = ({completedList, handleDeleteTask}: ToDoContentProps)
 
     return (
         <div className="w-full">
-            <Collapsible className="space-y-5 transition-transform duration-300 ease-in-out">
+            <Collapsible className="space-y-5">
                 <div className="flex items-center justify-between gap-4 ">
                     <CollapsibleTrigger className="flex items-center space-x-3 cursor-pointer">
                             <h4 className="text-sm font-semibold">
@@ -40,12 +40,12 @@ export const ToDoHistory = ({completedList, handleDeleteTask}: ToDoContentProps)
                     </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent >
-                    <div className="flex flex-col space-y-4 w-full">
+                    <div className="flex flex-col space-y-4 w-full rounded-md border px-4 py-3 text-sm hover:bg-gray-50">
                         {completedList.map((item, id) => (
                             <div key={id} className="flex items-center justify-between">
                                 <div className="flex items-center space-x-4">
                                     <Check id={`history-box-${id}`} className="text-blue-500"  />
-                                    <Label className="" htmlFor={`history-box-${id}`}>
+                                    <Label className="line-through" htmlFor={`history-box-${id}`}>
                                         {item.task}
                                     </Label>
 
